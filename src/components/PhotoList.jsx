@@ -1,10 +1,11 @@
-import PostItem from './PostItem';
+import PhotoItem from './PhotoItem';
+// import {TransitionGroup, CSSTransition} from 'react-transition-group';
 
-const PostList = ({posts, title, remove}) => {
-    if(!posts.length) {
+const photoList = ({photos, title}) => {
+    if(!photos.length) {
         return (
             <h1 style={{textAlign: 'center'}}>
-                Посты не были найдены
+                Фото не найдены
             </h1>
         )
     }
@@ -14,18 +15,30 @@ const PostList = ({posts, title, remove}) => {
             <h1 style={{textAlign: 'center'}}>
                 {title}
             </h1>
-                {posts.map((post, index) =>
-                        <PostItem
-                            // remove={remove}
-                            number={index + 1}
-                            post={post}
-                            key={post.id}
-                            classNames="post"
-                        />
-                )}
+
+            {photos.map((photo, index) =>
+                <PhotoItem
+                    number={index + 1}
+                    photo={photo}
+                    key={photo.id}
+                    classNames="photo"
+                />
+            )}
+
+            {/*<TransitionGroup>*/}
+            {/*    {photos.map((photo, index) =>*/}
+            {/*        <CSSTransition*/}
+            {/*            key={photo.id}*/}
+            {/*            timeout={500}*/}
+            {/*            classNames="photo"*/}
+            {/*        >*/}
+            {/*            <PhotoItem number={index + 1} photo={photo} />*/}
+            {/*        </CSSTransition>*/}
+            {/*    )}*/}
+            {/*</TransitionGroup>*/}
 
         </div>
     );
 };
 
-export default PostList;
+export default photoList;

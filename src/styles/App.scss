@@ -14,7 +14,7 @@
     width: 800px;
 }
 
-.post {
+.photo {
     display: flex;
     padding: 15px;
     border: 2px solid teal;
@@ -23,21 +23,35 @@
     align-items: center;
 }
 
-.post__btns {
+.photo__btns {
     display: flex;
+    flex-shrink: 0;
 }
 
-.post-enter {
+.photo__img {
+    height: 56px;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.photo__img img {
+    height: 100%;
+}
+
+.photo-enter {
     transform: translateX(-350px);
 }
-.post-enter-active {
+
+.photo-enter-active {
     transform: translateX(0px);
     transition: all 500ms ease-in;
 }
-.post-exit {
+
+.photo-exit {
     opacity: 1;
 }
-.post-exit-active {
+
+.photo-exit-active {
     transform: translateX(-350px);
     transition: all 500ms ease-in;
 }
@@ -60,9 +74,10 @@
 
 .navbar {
     height: 50px;
-    width: 100vw;
+    width: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
     background: lightgray;
     padding: 0 15px;
 }

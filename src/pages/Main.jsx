@@ -6,9 +6,9 @@ const Main = () => {
 
 
     return (
-        <div>
+        <div className="App">
             <NavBar>
-                <Link to={'/list'}>Посты</Link>
+                <Link to={'/list'}>Лист фото</Link>
             </NavBar>
             <div>
 

@@ -1,4 +1,5 @@
 import { createContext } from "react";
+
 const initialValue = {
     // loaded: [
     //     {
@@ -13,4 +14,4 @@ const initialValue = {
     // ],
 }
 
-export const ListContext = createContext(initialValue);
+export const ListContext = createContext(null);

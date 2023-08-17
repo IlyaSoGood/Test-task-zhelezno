@@ -2,45 +2,46 @@ import {useState, useEffect, useRef, useContext} from "react";
 import {Link} from "react-router-dom";
 import {ListContext} from "../context";
 
+import Loader from "../components/UI/Loader/Loader";
 import NavBar from "../components/UI/NavBar/NavBar";
 import PhotoList from "../components/PhotoList";
-import Loader from "../components/UI/Loader/Loader";
 
 import PhotoService from "../API/PhotoService";
 import {useFetching} from "../hooks/useFetching";
 import {useObserver} from '../hooks/useObserver';
 import {getPagesCount} from "../utils/pages";
 
-
+import PhotoItem from "../components/PhotoItem";
 
 const List = () => {
-    const {listContext, setListContext} = useContext(ListContext);
-    const [photos, setPhotos] = useState([]);
-    const [totalPages, setTotalPages] = useState(0);
-    const [page, setPage] = useState(1);
+    const {
+        loadedPhotos,
+        setLoadedPhotos,
+        totalPages,
+        setTotalPages,
+        page,
+        setPage
+    } = useContext(ListContext);
     const [limit, setLimit] = useState(20);
-    console.log(listContext);
-
     const lastElement = useRef();
 
     const [fetchPhotos, isPhotosLoading, photosError] = useFetching(async (limit, page) => {
         const response = await PhotoService.getAll(limit, page);
-        setPhotos([...photos, ...response.data]);
-        setListContext({
-            ...listContext,
-            loaded: response.data
-        })
-        const totalCount = response.headers['x-total-count']
+        setLoadedPhotos([...loadedPhotos, ...response.data])
+
+        const totalCount = response.headers['x-total-count'];
         setTotalPages(getPagesCount(totalCount, limit));
     });
-
-    useObserver(lastElement, page < totalPages, isPhotosLoading, () => {
-        setPage(page + 1)
-    })
-
-    useEffect(() => {
+    useObserver(lastElement, page <= totalPages, isPhotosLoading, () => {
+        setPage(page + 1);
         fetchPhotos(limit, page);
-    }, [page, limit])
+    })
+    useEffect(() => {
+        if (loadedPhotos.length === 0) {
+            setPage(page + 1);
+            fetchPhotos(limit, page);
+        }
+    }, [])
 
     return (
         <div className="App">
@@ -48,13 +49,13 @@ const List = () => {
                 <Link to={'/'}>Назад на главную</Link>
             </NavBar>
             {photosError &&
-                <h1>Произошла ошибка {photosError}</h1>
+                <h2>Произошла ошибка {photosError}</h2>
             }
             {isPhotosLoading &&
                 <div style={{display: 'flex', justifyContent: 'center', marginTop: 50}}><Loader/></div>
             }
 
-            <PhotoList photos={photos} title={'Лист с фото'}/>
+            <PhotoList photos={loadedPhotos} title={'Лист с фото'} Component={PhotoItem}/>
             <div ref={lastElement} style={{height: 20, background: 'red'}}></div>
 
         </div>

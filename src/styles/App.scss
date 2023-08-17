@@ -22,10 +22,17 @@
     justify-content: space-between;
     align-items: center;
 }
+.photo {
 
-.photo__btns {
+}
+
+.photo__btn {
     display: flex;
     flex-shrink: 0;
+    min-width: 178px;
+}
+.photo__btn_active {
+    background: #b0f7cc;
 }
 
 .photo__img {

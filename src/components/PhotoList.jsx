@@ -1,15 +1,11 @@
-import PhotoItem from './PhotoItem';
-// import {TransitionGroup, CSSTransition} from 'react-transition-group';
-
-const photoList = ({photos, title}) => {
+const PhotoList = ({photos, title, Component}) => {
     if(!photos.length) {
         return (
-            <h1 style={{textAlign: 'center'}}>
+            <h2 style={{textAlign: 'center'}}>
                 Фото не найдены
-            </h1>
+            </h2>
         )
     }
-
     return (
         <div>
             <h1 style={{textAlign: 'center'}}>
@@ -17,28 +13,15 @@ const photoList = ({photos, title}) => {
             </h1>
 
             {photos.map((photo, index) =>
-                <PhotoItem
+                <Component
                     number={index + 1}
                     photo={photo}
                     key={photo.id}
                     classNames="photo"
                 />
             )}
-
-            {/*<TransitionGroup>*/}
-            {/*    {photos.map((photo, index) =>*/}
-            {/*        <CSSTransition*/}
-            {/*            key={photo.id}*/}
-            {/*            timeout={500}*/}
-            {/*            classNames="photo"*/}
-            {/*        >*/}
-            {/*            <PhotoItem number={index + 1} photo={photo} />*/}
-            {/*        </CSSTransition>*/}
-            {/*    )}*/}
-            {/*</TransitionGroup>*/}
-
         </div>
     );
 };
 
-export default photoList;
+export default PhotoList;

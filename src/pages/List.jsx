@@ -29,6 +29,8 @@ const List = () => {
         const response = await PhotoService.getAll(limit, page);
         setLoadedPhotos([...loadedPhotos, ...response.data])
 
+        // }))])
+
         const totalCount = response.headers['x-total-count'];
         setTotalPages(getPagesCount(totalCount, limit));
     });
